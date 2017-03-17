@@ -263,4 +263,10 @@ public class Task {
             return resourcesAssigned.size();
         return -1;
     }
+
+    @Override
+    public String toString() {
+        return "Task{" + "taskID=" + taskID + ", startDate=" + startDate + ", endDate=" + endDate + ", name=" + name + ", type=" + type + ", cost=" + cost + ", totalDuration=" + totalDuration + ", calculatedTime=" + calculatedTime + ", resourcesAssigned=" + resourcesAssigned + '}';
+    }
+    
 }
