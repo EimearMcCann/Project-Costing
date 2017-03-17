@@ -33,6 +33,7 @@ public class Version {
 
     public Task getTask(int id) {
         Task temp = null;
+        // test if id is valid
         if (id > 0) {
             // search for task id
             for (Task t : tasks) {
@@ -42,5 +43,14 @@ public class Version {
             }
         }
         return temp;
+    }
+    
+    public boolean removeTask(int id){
+        boolean removed = false;
+        Task temp = getTask(id);
+        if(temp != null){
+            removed = tasks.remove(temp);
+        }
+        return removed;
     }
 }
