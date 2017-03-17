@@ -22,15 +22,15 @@ public class CustomerDB extends DBHandler {
         // then create query and create customer
         if (id <= getCount()) {
             try {
-                // if connection to db is closed, open it
-                if (conn.isClosed()) {
-                    openConnection();
-                }
-                String query;
-                query = makeSelectCustomer(id);
+                // openconnection
+                openConnection();
+                // create query
+                String query = makeSelectCustomer(id);
+                // get results and pass cursor over first row
                 ResultSet rs = stmt.executeQuery(query);
-                Customer.setNextID(id);
                 rs.next();
+                // set next customer id to avoid conflicts
+                Customer.setNextID(id);
                 // create customer based on results
                 c = new Customer(rs.getString(1), rs.getString(2),
                         rs.getString(3), rs.getString(4),
@@ -49,17 +49,15 @@ public class CustomerDB extends DBHandler {
     public void write(Customer c) {
         if (c != null) {
             try {
-                // if connection to db is closed, open it
-                if (conn.isClosed()) {
-                    openConnection();
-                }
+                // open connection to db
+                openConnection();
                 // create query to insert customer info
                 String query = makeInsertQuery(c.getName(), 
                         c.getAddress().getStreet(), c.getAddress().getTown(), 
                         c.getAddress().getCounty(), c.getPhone(), c.getEmail());
                 // execute query
                 stmt.executeUpdate(query);
-                System.out.println("success...written to db");
+                //System.out.println("success...written to db");
             } catch (NullPointerException npe) {
                 System.out.println(npe.getMessage());
             } catch (SQLException e) {
