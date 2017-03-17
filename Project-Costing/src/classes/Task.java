@@ -95,6 +95,11 @@ public class Task {
     public Date getStartDate(){
         return startDate;
     }
+    
+    public void setStartDate(Date start){
+        if(start != null)
+            startDate = start;
+    }
 
     public Date getEndDate() {
         calcEndDate();
@@ -194,7 +199,6 @@ public class Task {
     /**
      * toString method
      *
-     * @return
      */
 
     public void read() {
