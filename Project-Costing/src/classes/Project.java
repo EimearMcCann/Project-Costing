@@ -17,9 +17,9 @@ public class Project {
     private Date endDate;
     private double cost;
     private double duration;
-    private ArrayList<Task> tasks = new ArrayList<>();
+    private ArrayList<Version> versions = new ArrayList<>();
 
-    public Project(int id) {
+    public Project() {
         projectID = nextProjectID++;
         name = "";
         startDate = new Date();
@@ -34,12 +34,12 @@ public class Project {
      * @param startDate
      * @param task
      */
-    public Project(String name, Date startDate, Task task) {
+    public Project(String name, Date startDate, Version task) {
         projectID = nextProjectID++;
         this.name = name;
         this.startDate = startDate;
         //endDate = new Date(startDate.getDay(), startDate.getMonth(), startDate.getYear());
-        tasks.add(task);
+        versions.add(task);
         //noOfTasks = 1;
     }
 
@@ -92,19 +92,19 @@ public class Project {
     /**
      * Accessor method for endDate
      *
-     * @param task
+     * @param version
      */
-    public void assignTask(Task task) {
-        tasks.add(task);
+    public void assignVersion(Version version) {
+        versions.add(version);
     }
 
     /**
-     * Accessor method for number of tasks
+     * Accessor method for number of versions
      *
      * @return
      */
-    public int getNoOfTasks() {
-        return tasks.size();
+    public int getNoOfVersions() {
+        return versions.size();
     }
 
     /**
@@ -121,37 +121,42 @@ public class Project {
      * Method to calculate cost
      */
     private void calculateCost() {
-        cost = 0;
-        for (Task t : tasks) {
-            // calculate price of each task in project
-            //cost += t.getCost();
-        }
+        cost = versions.get(versions.size() - 1).getCost();
     }
 
     public void calculateDuration() {
-        for (Task t : tasks) {
-            //t.calculateDuration();
-            //duration += t.getCalculatedTime();
-        }
+        duration = versions.get(versions.size() - 1).getDuration();
     }
 
     private void calcEndDate() {
         // get end date of last task
-        //endDate = tasks.get(tasks.size() - 1).getEndDate();
+        endDate = versions.get(versions.size() - 1).getEndDate();
     }
 
-//    public Date calculateEndDate() {
-//        //endDate = startDate;
-//        for (int i = 0; i < duration; i++) {
-//            endDate.addDay();
-//        }
-//        return endDate;
-//    }
-
-    public void printTasks() {
-        for (Task t : tasks) {
+    /**
+     *
+     */
+    public void printVersions() {
+        for (Version t : versions) {
             System.out.println(t.toString());
         }
+    }
+    
+    public void createVersion(){
+        Scanner in = new Scanner(System.in);
+        boolean valid = false;
+        char sentinel;
+        Version v;
+        do{
+            try{
+               System.out.print("Wanna Quit? [Y|N]");
+               sentinel = in.nextLine().charAt(0);
+               if(sentinel == 'n' || sentinel == 'N')
+                   valid = true;
+            }catch(Exception e){
+                System.out.println("Exception = " + e.getMessage());
+            }
+        }while(!valid);
     }
 //
 //    public void read() {
@@ -168,17 +173,17 @@ public class Project {
 //                do {
 //                    // if task list is empty, 
 //                    // then create task with same start date as project
-//                    if (tasks.isEmpty()) {
+//                    if (versions.isEmpty()) {
 //                        task = new Task(startDate);
 //                    } // otherwise create task with start date
 //                    // same as end date of last task in list
 //                    else {
-//                        Date temp = tasks.get(tasks.size() - 1).getEndDate();
+//                        Date temp = versions.get(versions.size() - 1).getEndDate();
 //
 //                        task = new Task(temp);
 //                    }
 //                    task.read();
-//                    tasks.add(task);
+//                    versions.add(task);
 //                    System.out.print("Do you want to add another task? [Y|N] ");
 //                    sentinel = in.next().charAt(0);
 //                } while (!(sentinel == 'N' || sentinel == 'n'));
