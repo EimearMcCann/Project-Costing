@@ -50,15 +50,14 @@ public class Task {
      *
      */
     public Task(String name, String type, Date startDate, int duration, Resource resource) {
+        taskID = nextTaskID++;
         this.name = name;
         this.type = type;
         this.startDate = startDate;
-        //endDate = new Date(startDate.getDay(), startDate.getMonth(), startDate.getYear());
         this.totalDuration = duration;
         resourcesAssigned = new ArrayList<>();
         resourcesAssigned.add(resource);
-        taskID = nextTaskID++;
-        //this.previous = previous;
+        calcEndDate();
     }
 
     /**
