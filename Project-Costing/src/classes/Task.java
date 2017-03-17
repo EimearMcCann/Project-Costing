@@ -24,6 +24,8 @@ public class Task {
         taskID = nextTaskID++;
         name = null;
         type = null;
+        startDate = null;
+        endDate = null;
         cost = 0;
         totalDuration = 0;
         calculatedTime = 0;
@@ -207,6 +209,8 @@ public class Task {
                 setType(in.nextLine());
                 System.out.print("ENTER DURATION: ");
                 setDuration(Double.parseDouble(in.nextLine()));
+                System.out.println("ENTER START DATE: ");
+                startDate.read();
                 do {
                     System.out.print("ENTER RESOURCE: ");
                     res = in.next();
@@ -250,11 +254,11 @@ public class Task {
                 } while (!(sentinel == 'N' || sentinel == 'n'));
                 valid = true;
             } catch (NumberFormatException nfe) {
-                System.out.println("Please enter an integer value!!!");
+                System.out.println("Please enter an integer value!!! " + nfe.getMessage());
             } catch (IllegalArgumentException iae) {
-                System.out.println(iae.getMessage());
+                System.out.println("Illegal, Please enter an integer value!!! " + iae.getMessage());
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.out.println("Something else went wrong " + e.getMessage());
             }
         } while (!valid);
     }
