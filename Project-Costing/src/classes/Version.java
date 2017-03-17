@@ -27,6 +27,26 @@ public class Version {
         endDate = null;
         tasks = new ArrayList();
     }
+    
+    public Version(String name, Date start, double duration, ArrayList<Task> tasks){
+        number = nextNumber++;
+        this.name = name;
+        this.startDate = start;
+        this.duration = duration;
+        this.tasks = tasks;
+        calcCost();
+        calcEndDate();
+    }
+    
+    public Version(Version previous){
+        number = nextNumber++;
+        this.name = previous.getName();
+        this.startDate = previous.getStartDate();
+        this.duration = previous.getDuration();
+        this.tasks = previous.getTasks();
+        calcCost();
+        calcEndDate();
+    }
 
     // Methods
     public void addTask(Task t) {
