@@ -1,6 +1,7 @@
 package classes;
 
 import java.util.HashMap;
+import java.util.Scanner;
 import org.joda.time.DateTime;
 
 /**
@@ -71,6 +72,26 @@ public class Date {
         } while (holidays.containsValue(date));
     }
 
+    public void read() {
+        Scanner in = new Scanner(System.in);
+        boolean valid = false;
+        do{
+        try {
+            System.out.print("Please enter the year: ");
+            year = Integer.parseInt(in.nextLine());
+            System.out.print("Please enter the year: ");
+            month = Integer.parseInt(in.nextLine());
+            System.out.print("Please enter the year: ");
+            day = Integer.parseInt(in.nextLine());
+            valid = true;
+        } catch (NumberFormatException nfe) {
+            System.out.print("Not a number " + nfe.getMessage());
+        } catch (Exception e) {
+            System.out.print("Something else went wrong " + e.getMessage());
+        }
+        }while(!valid);
+    }
+    
     @Override
     public String toString() {
         int year, month, day;
