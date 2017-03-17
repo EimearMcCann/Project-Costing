@@ -9,9 +9,9 @@ import java.util.Scanner;
  */
 public class Task {
     // Instance Fields
-    private int taskID;
+    private final int taskID;
     private static int nextTaskID = 1;
-    private final Date startDate;
+    private Date startDate;
     private Date endDate;
     private String name;
     private String type;
@@ -20,6 +20,16 @@ public class Task {
     private double calculatedTime;
     private ArrayList<Resource> resourcesAssigned;
 
+    public Task(){
+        taskID = nextTaskID++;
+        name = null;
+        type = null;
+        cost = 0;
+        totalDuration = 0;
+        calculatedTime = 0;
+        resourcesAssigned = new ArrayList();
+    }
+    
     public Task(Date start) {
         taskID = nextTaskID++;
         startDate = start;
@@ -197,7 +207,6 @@ public class Task {
                 setType(in.nextLine());
                 System.out.print("ENTER DURATION: ");
                 setDuration(Double.parseDouble(in.nextLine()));
-                //startDate.read();
                 do {
                     System.out.print("ENTER RESOURCE: ");
                     res = in.next();
