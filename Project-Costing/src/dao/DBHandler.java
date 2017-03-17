@@ -16,7 +16,7 @@ public abstract class DBHandler {
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     private static final String DB_URL = "jdbc:mysql://"
         + "ec2-34-251-133-58.eu-west-1.compute.amazonaws.com:3306" 
-        + "/project_planner?autoReconnect=true&useSSL=false";
+        + "/project_costing?autoReconnect=true&useSSL=false";
     private static String username;
     private static String password;
     

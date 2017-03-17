@@ -51,13 +51,15 @@ public class CustomerDB extends DBHandler {
             try {
                 // open connection to db
                 openConnection();
+                // create table if it doesnt exist
+                createCustomerTable();
                 // create query to insert customer info
                 String query = makeInsertQuery(c.getName(), 
                         c.getAddress().getStreet(), c.getAddress().getTown(), 
                         c.getAddress().getCounty(), c.getPhone(), c.getEmail());
                 // execute query
                 stmt.executeUpdate(query);
-                //System.out.println("success...written to db");
+                System.out.println("success...written to db");
             } catch (NullPointerException npe) {
                 System.out.println(npe.getMessage());
             } catch (SQLException e) {
@@ -72,13 +74,13 @@ public class CustomerDB extends DBHandler {
 
     private static String makeSelectCustomer(int id) {
         String select = "SELECT Name, Street, Town, County, PhoneNo, Email "
-                + "FROM project_planner.customer WHERE ID = " + id + ";";
+                + "FROM project_costing.customer WHERE ID = " + id + ";";
 
         return select;
     }
 
     private static String makeInsertQuery(String name, String street, String town, String county, String phone, String email) {
-        String insert = "INSERT INTO project_planner.customer (Name, Street, Town, County, PhoneNo, Email) "
+        String insert = "INSERT INTO project_costing.customer (Name, Street, Town, County, PhoneNo, Email) "
                 + "VALUES ('" + name + "', '" + street + "', '" + town + "', '" + county + "', '" + phone + "', '" + email + "');";
 
         return insert;
