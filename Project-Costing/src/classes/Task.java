@@ -97,11 +97,7 @@ public class Task {
     }
 
     public Date getEndDate() {
-        calcTime();
-        endDate = new Date(startDate.getDay(), startDate.getMonth(), startDate.getYear());
-        for (int i = 1; i < calculatedTime; i++) {
-            endDate.addWorkDay();
-        }
+        calcEndDate();
         return endDate;
     }
 
@@ -157,8 +153,7 @@ public class Task {
      * @return
      */
     public double getCost() {
-        calculateCost();
-
+        calcCost();
         return cost;
     }
 
@@ -174,7 +169,7 @@ public class Task {
     /**
      * Method to calculate total cost of task
      */
-    private void calculateCost() {
+    private void calcCost() {
         cost = 0;
         for (Resource r : resourcesAssigned) {
             // calculate price of each resource per day
@@ -186,6 +181,14 @@ public class Task {
 
     private void calcTime() {
         calculatedTime = totalDuration / resourcesAssigned.size();
+    }
+    
+    private void calcEndDate(){
+        calcTime();
+        endDate = new Date(startDate.getDay(), startDate.getMonth(), startDate.getYear());
+        for (int i = 1; i < calculatedTime; i++) {
+            endDate.addWorkDay();
+        }
     }
 
     /**
@@ -275,7 +278,13 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" + "taskID=" + taskID + ", startDate=" + startDate + ", endDate=" + endDate + ", name=" + name + ", type=" + type + ", cost=" + cost + ", totalDuration=" + totalDuration + ", calculatedTime=" + calculatedTime + ", resourcesAssigned=" + resourcesAssigned + '}';
+        calcCost();
+        calcEndDate();
+        return "Task{" + "taskID=" + taskID + ", startDate=" + startDate 
+                + ", endDate=" + endDate + ", name=" + name + ", type=" 
+                + type + ", cost=" + cost + ", totalDuration=" + totalDuration 
+                + ", calculatedTime=" + calculatedTime + ", resourcesAssigned=" 
+                + resourcesAssigned + '}';
     }
     
 }
