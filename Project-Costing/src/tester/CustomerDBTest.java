@@ -18,7 +18,7 @@ public class CustomerDBTest {
         
         c.read();
         db.write(c);
-        System.out.print("Success, Written to DB");
+        System.out.println("Success, Written to DB");
     }
 
 }
