@@ -31,6 +31,14 @@ public class Customer {
         this.phone = phone;
         this.email = email;
     }
+    
+    public Customer(String name, String street, String town, String county, String phone, String email){
+        customerID = nextCustID++;
+        this.name = name;
+        this.address = new Address(street, town, county);
+        this.phone = phone;
+        this.email = email;
+    }
 
     public String getName() {
         return name;
