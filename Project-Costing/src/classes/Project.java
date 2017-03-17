@@ -98,6 +98,11 @@ public class Project {
         versions.add(version);
     }
 
+    public void addVersion() {
+        Version version = createVersion();
+        versions.add(version);
+    }
+    
     /**
      * Accessor method for number of versions
      *
@@ -142,26 +147,29 @@ public class Project {
         }
     }
     
-    public void createVersion(){
+    public Version createVersion(){
         Scanner in = new Scanner(System.in);
-        boolean valid = false;
+        boolean quit = false;
         char sentinel;
-        Version v;
+        Version v = null;
         do{
             try{
+               v = new Version(name);
+               v.read();
                System.out.print("Wanna Quit? [Y|N]");
                sentinel = in.nextLine().charAt(0);
-               if(sentinel == 'n' || sentinel == 'N')
-                   valid = true;
+               if(sentinel == 'y' || sentinel == 'Y')
+                   quit = true;
             }catch(Exception e){
                 System.out.println("Exception = " + e.getMessage());
             }
-        }while(!valid);
+        }while(!quit);
+        return v;
     }
 //
 //    public void read() {
 //        Scanner in = new Scanner(System.in);
-//        boolean valid = false;
+//        boolean quit = false;
 //        char sentinel;
 //        Task task;
 //        do {
@@ -189,12 +197,12 @@ public class Project {
 //                } while (!(sentinel == 'N' || sentinel == 'n'));
 //                calculateDuration();
 //                calcEndDate();
-//                valid = true;
+//                quit = true;
 //            } catch (IllegalArgumentException iae) {
 //                System.out.println(iae.getMessage());
 //            } catch (Exception e) {
 //                System.out.println(e.getMessage());
 //            }
-//        } while (!valid);
+//        } while (!quit);
 //    }
 }
