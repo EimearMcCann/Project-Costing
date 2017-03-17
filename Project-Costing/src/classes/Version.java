@@ -35,10 +35,13 @@ public class Version {
         Task temp = null;
         // test if id is valid
         if (id > 0) {
-            // search for task id
-            for (Task t : tasks) {
-                if (t.getTaskID() == id) {
-                    temp = t;
+            // if task list isn't empty
+            if (!tasks.isEmpty()) {
+                // search for task id
+                for (Task t : tasks) {
+                    if (t.getTaskID() == id) {
+                        temp = t;
+                    }
                 }
             }
         }
