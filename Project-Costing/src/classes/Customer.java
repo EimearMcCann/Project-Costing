@@ -1,5 +1,8 @@
 package classes;
 
+import java.awt.HeadlessException;
+import javax.swing.JOptionPane;
+
 /**
  * @author Marinus Toman Date: 16-Mar-2017
  */
@@ -13,6 +16,14 @@ public class Customer {
     private String phone;
     private String email;
 
+    public Customer(){
+        customerID = nextCustID++;
+        name = null;
+        address = new Address();
+        phone = null;
+        email = null;
+    }
+    
     public Customer(String name, Address address, String phone, String email) {
         customerID = nextCustID++;
         this.name = name;
@@ -59,6 +70,19 @@ public class Customer {
 
     public static void setNextID(int id) {
         nextCustID = id;
+    }
+    
+    public void read(){
+        try{
+            name = JOptionPane.showInputDialog(null, "Enter the customer name", "Enter Name", JOptionPane.INFORMATION_MESSAGE);
+            address.read();
+            phone = JOptionPane.showInputDialog(null, "Enter the customers phone number", "Enter Phone Number", JOptionPane.INFORMATION_MESSAGE);
+            email = JOptionPane.showInputDialog(null, "Enter the customers email", "Enter Email", JOptionPane.INFORMATION_MESSAGE);
+        }catch(HeadlessException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }
 
     @Override
