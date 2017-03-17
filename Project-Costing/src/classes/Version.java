@@ -62,14 +62,17 @@ public class Version {
     }
 
     public Date getEndDate() {
+        calcEndDate();
         return endDate;
     }
 
     public double getCost() {
+        calcCost();
         return cost;
     }
 
     public double getDuration() {
+        calcDuration();
         return duration;
     }
     
@@ -108,5 +111,25 @@ public class Version {
         for (Task t : tasks) {
             System.out.println(t.toString());
         }
+    }
+    
+    private void calcCost() {
+        cost = 0;
+        for (Task t : tasks) {
+            // calculate price of each task in project
+            cost += t.getCost();
+        }
+    }
+
+    private void calcDuration() {
+        for (Task t : tasks) {
+            //t.calculateDuration();
+            duration += t.getCalculatedTime();
+        }
+    }
+
+    private void calcEndDate() {
+        // get end date of last task
+        endDate = tasks.get(tasks.size() - 1).getEndDate();
     }
 }

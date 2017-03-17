@@ -19,8 +19,6 @@ public class Task {
     private double totalDuration;
     private double calculatedTime;
     private ArrayList<Resource> resourcesAssigned;
-    //pointer to previous task
-    //private Task previous;
 
     public Task(Date start) {
         taskID = nextTaskID++;
@@ -32,7 +30,6 @@ public class Task {
     }
 
     /**
-     * @param projectID
      * @param name
      * @param type
      * @param startDate
@@ -87,15 +84,14 @@ public class Task {
         return startDate;
     }
 
-//    public Date getEndDate() {
-//        calcTime();
-//        endDate = new Date(startDate.getDay(), startDate.getMonth(), startDate.getYear());
-//        for (int i = 1; i < calculatedTime; i++) {
-//            endDate.addDay();
-//        }
-//
-//        return endDate;
-//    }
+    public Date getEndDate() {
+        calcTime();
+        endDate = new Date(startDate.getDay(), startDate.getMonth(), startDate.getYear());
+        for (int i = 1; i < calculatedTime; i++) {
+            endDate.addWorkDay();
+        }
+        return endDate;
+    }
 
     public double getCalculatedTime() {
         calcTime();
