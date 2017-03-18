@@ -130,6 +130,10 @@ public class Version {
         return temp;
     }
     
+    public int getNumTasks(){
+        return tasks.size();
+    }
+    
     public boolean removeTask(int id){
         boolean removed = false;
         Task temp = getTask(id);

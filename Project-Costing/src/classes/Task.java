@@ -51,11 +51,30 @@ public class Task {
      * @param resource
      *
      */
-    public Task(String name, String type, Date startDate, int duration, Resource resource) {
+    public Task(String name, String type, String startDate, double duration, String resource) {
         taskID = nextTaskID++;
         this.name = name;
         this.type = type;
-        this.startDate = startDate;
+        this.startDate = Date.parseDate(startDate);
+        this.totalDuration = duration;
+        resourcesAssigned = new ArrayList<>();
+        resourcesAssigned.add(Resource.fromString(resource));
+        calcEndDate();
+    }
+    
+    /**
+     * @param name
+     * @param type
+     * @param startDate
+     * @param duration
+     * @param resource
+     *
+     */
+    public Task(String name, String type, String startDate, double duration, Resource resource) {
+        taskID = nextTaskID++;
+        this.name = name;
+        this.type = type;
+        this.startDate = Date.parseDate(startDate);
         this.totalDuration = duration;
         resourcesAssigned = new ArrayList<>();
         resourcesAssigned.add(resource);
