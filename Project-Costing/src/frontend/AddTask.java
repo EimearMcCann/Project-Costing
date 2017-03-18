@@ -9,7 +9,10 @@ package frontend;
 import classes.Resource;
 import classes.Task;
 import classes.Version;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.Timer;
 
 /**
  *
@@ -39,6 +42,15 @@ public class AddTask extends javax.swing.JFrame {
         previousScreen = previous;
         this.version = version;
         task = null;
+        populateFields();
+    }
+    
+    private void populateFields(){
+        if(version.getTasks().isEmpty())
+            taskStartField.setText(version.getStartDate().toString());
+        else
+            taskStartField.setText(version.getLastTask().getEndDate().toString());
+        
     }
 
     /** This method is called from within the constructor to
@@ -54,7 +66,7 @@ public class AddTask extends javax.swing.JFrame {
         addTaskBtn = new javax.swing.JButton();
         taskCostField = new javax.swing.JTextField();
         taskEndField = new javax.swing.JTextField();
-        taskDurationField = new javax.swing.JTextField();
+        taskStartField = new javax.swing.JTextField();
         taskNameField = new javax.swing.JTextField();
         taskTypeField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -67,7 +79,8 @@ public class AddTask extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         taskResources = new javax.swing.JComboBox<>();
-        taskStartField = new com.toedter.calendar.JDateChooser();
+        taskDurationField = new javax.swing.JTextField();
+        taskAddResourceBtn = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -102,9 +115,10 @@ public class AddTask extends javax.swing.JFrame {
             }
         });
 
-        taskDurationField.addActionListener(new java.awt.event.ActionListener() {
+        taskStartField.setEnabled(false);
+        taskStartField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                taskDurationFieldActionPerformed(evt);
+                taskStartFieldActionPerformed(evt);
             }
         });
 
@@ -132,10 +146,10 @@ public class AddTask extends javax.swing.JFrame {
         jLabel3.setText("Type");
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel4.setText("Start Date");
+        jLabel4.setText("Duration");
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel5.setText("Duration");
+        jLabel5.setText("Start Date");
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel6.setText("End Date");
@@ -150,37 +164,53 @@ public class AddTask extends javax.swing.JFrame {
 
         taskResources.setModel(new DefaultComboBoxModel(Resource.enumsToStringArray()));
 
+        taskDurationField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                taskDurationFieldActionPerformed(evt);
+            }
+        });
+
+        taskAddResourceBtn.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        taskAddResourceBtn.setText("Add Another Resource");
+        taskAddResourceBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                taskAddResourceBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(taskEndField, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(taskDurationField, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(taskTypeField, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(taskNameField, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(taskCostField, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                                .addComponent(taskResources, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(taskStartField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(taskBackBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(addTaskBtn)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(taskEndField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(taskStartField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(taskTypeField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(taskNameField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(taskCostField, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                    .addComponent(taskResources, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(taskDurationField))))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(taskBackBtn)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(addTaskBtn)))
+                    .addComponent(taskAddResourceBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -201,13 +231,13 @@ public class AddTask extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(taskTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(taskStartField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(taskDurationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(taskDurationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(taskStartField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
@@ -220,6 +250,8 @@ public class AddTask extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
                             .addComponent(taskResources, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(taskAddResourceBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(taskBackBtn)
@@ -249,27 +281,40 @@ public class AddTask extends javax.swing.JFrame {
         try {
             name = taskNameField.getText();
             type = taskTypeField.getText();
-            java.sql.Date sqlDate = new java.sql.Date(taskStartField.getDate().getTime());
-            startDate = sqlDate.toString();
-            System.out.println("##Test Printing##");
-            System.out.println(startDate);
-            System.out.println(name);
-            System.out.println(type);
-            duration = Double.parseDouble(taskDurationField.getText());
-            String res = (String)taskResources.getSelectedItem();
+            if (version.getTasks().isEmpty()) {
+                startDate = version.getStartDate().toString();
+            } else {
+                startDate = version.getLastTask().getEndDate().toString();
+            }
+            taskStartField.setText(startDate);
+            duration = Double.parseDouble(taskStartField.getText());
+            String res = (String) taskResources.getSelectedItem();
             System.out.println(res);
             task = new Task(name, type, startDate, duration, res);
             version.addTask(task);
-            taskNameField.setText("");
-            taskTypeField.setText("");
-            taskDurationField.setText("");
-            taskEndField.setText("");
-            taskCostField.setText("");
-            taskNameField.requestFocusInWindow();
+            version.printTasks();
+            taskEndField.setText(task.getEndDate().toString());
+            taskCostField.setText(String.valueOf(task.getCost()));
+
+            Timer delay = new Timer(3000, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    taskNameField.setText("");
+                    taskTypeField.setText("");
+                    taskStartField.setText(task.getEndDate().toString());
+                    taskEndField.setText("");
+                    taskCostField.setText("");
+                    taskNameField.requestFocusInWindow();
+                }
+            });
+            delay.setRepeats(false);
+            delay.start();
+
         } catch (NumberFormatException e) {
             System.out.println("Something wrong with the number " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Or something else happeneing " + e.getMessage());
+            e.printStackTrace();
         }
 
     }//GEN-LAST:event_addTaskBtnActionPerformed
@@ -282,9 +327,9 @@ public class AddTask extends javax.swing.JFrame {
         taskCostField.requestFocusInWindow();
     }//GEN-LAST:event_taskEndFieldActionPerformed
 
-    private void taskDurationFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskDurationFieldActionPerformed
+    private void taskStartFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskStartFieldActionPerformed
         taskEndField.requestFocusInWindow();
-    }//GEN-LAST:event_taskDurationFieldActionPerformed
+    }//GEN-LAST:event_taskStartFieldActionPerformed
 
     private void taskNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskNameFieldActionPerformed
         taskTypeField.requestFocus();
@@ -293,6 +338,25 @@ public class AddTask extends javax.swing.JFrame {
     private void taskTypeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskTypeFieldActionPerformed
         taskStartField.requestFocusInWindow();
     }//GEN-LAST:event_taskTypeFieldActionPerformed
+
+    private void taskDurationFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskDurationFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_taskDurationFieldActionPerformed
+
+    private void taskAddResourceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskAddResourceBtnActionPerformed
+        // TODO add your handling code here:
+        String name, type, start, resource;
+        double duration;
+        if(task == null){
+            name = taskNameField.getText();
+            type = taskTypeField.getText();
+            duration = Double.parseDouble(taskDurationField.getText());
+            start = taskStartField.getText();
+            resource = (String)taskResources.getSelectedItem();
+            
+        }
+            
+    }//GEN-LAST:event_taskAddResourceBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -341,13 +405,14 @@ public class AddTask extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JToggleButton taskAddResourceBtn;
     private javax.swing.JButton taskBackBtn;
     private javax.swing.JTextField taskCostField;
     private javax.swing.JTextField taskDurationField;
     private javax.swing.JTextField taskEndField;
     private javax.swing.JTextField taskNameField;
     private javax.swing.JComboBox<String> taskResources;
-    private com.toedter.calendar.JDateChooser taskStartField;
+    private javax.swing.JTextField taskStartField;
     private javax.swing.JTextField taskTypeField;
     // End of variables declaration//GEN-END:variables
 
