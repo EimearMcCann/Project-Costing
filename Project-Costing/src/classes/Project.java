@@ -94,6 +94,14 @@ public class Project {
     public Date getStartDate() {
         return startDate;
     }
+    
+    /**
+     * 
+     * @param date
+     */
+    public void setStartDate(String date){
+        startDate = Date.parseDate(date);
+    }
 
     public double getDuration() {
         calculateDuration();
