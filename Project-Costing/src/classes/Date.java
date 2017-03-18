@@ -94,6 +94,21 @@ public class Date {
         }while(!valid);
     }
     
+    public static Date parseDate(String dateString){
+        Date temp = null;
+        if (!(dateString == null || dateString.isEmpty())) {
+            int length = dateString.length();
+            if (length == 10) {
+                int year, month, day;
+                year = Integer.parseInt(dateString.substring(0, 5));
+                month = Integer.parseInt(dateString.substring(6, 8));
+                day = Integer.parseInt(dateString.substring(9));
+                temp = new Date(day, month, year);
+            }
+        }
+        return temp;
+    }
+    
     @Override
     public String toString() {
         int year, month, day;
