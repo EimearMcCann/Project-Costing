@@ -9,7 +9,6 @@ import java.util.Scanner;
  */
 public class Project {
     // Instance Fields
-// instance fields
     private int projectID;
     private static int nextProjectID = 1;
     private String name;
@@ -19,6 +18,9 @@ public class Project {
     private double duration;
     private ArrayList<Version> versions = new ArrayList<>();
 
+    /**
+     * Default constructor
+     */
     public Project() {
         projectID = nextProjectID++;
         name = "";
@@ -27,6 +29,11 @@ public class Project {
         duration = 0;
     }
     
+    /**
+     * Constructs new Project with name and startDate
+     * @param name
+     * @param date 
+     */
     public Project(String name, String date){
         projectID = nextProjectID++;
         this.name = name;
@@ -46,9 +53,10 @@ public class Project {
         projectID = nextProjectID++;
         this.name = name;
         this.startDate = startDate;
-        //endDate = new Date(startDate.getDay(), startDate.getMonth(), startDate.getYear());
         versions.add(task);
-        //noOfTasks = 1;
+        endDate = task.getEndDate();
+        calculateCost();
+        calculateDuration();
     }
 
     /**
@@ -137,7 +145,7 @@ public class Project {
         cost = versions.get(versions.size() - 1).getCost();
     }
 
-    public void calculateDuration() {
+    private void calculateDuration() {
         duration = versions.get(versions.size() - 1).getDuration();
     }
 
@@ -174,43 +182,4 @@ public class Project {
         }while(!quit);
         return v;
     }
-//
-//    public void read() {
-//        Scanner in = new Scanner(System.in);
-//        boolean quit = false;
-//        char sentinel;
-//        Task task;
-//        do {
-//            try {
-//                System.out.println("\tENTER PROJECT DETAILS");
-//                System.out.print("ENTER NAME: ");
-//                setName(in.nextLine());
-//                startDate.read();
-//                do {
-//                    // if task list is empty, 
-//                    // then create task with same start date as project
-//                    if (versions.isEmpty()) {
-//                        task = new Task(startDate);
-//                    } // otherwise create task with start date
-//                    // same as end date of last task in list
-//                    else {
-//                        Date temp = versions.get(versions.size() - 1).getEndDate();
-//
-//                        task = new Task(temp);
-//                    }
-//                    task.read();
-//                    versions.add(task);
-//                    System.out.print("Do you want to add another task? [Y|N] ");
-//                    sentinel = in.next().charAt(0);
-//                } while (!(sentinel == 'N' || sentinel == 'n'));
-//                calculateDuration();
-//                calcEndDate();
-//                quit = true;
-//            } catch (IllegalArgumentException iae) {
-//                System.out.println(iae.getMessage());
-//            } catch (Exception e) {
-//                System.out.println(e.getMessage());
-//            }
-//        } while (!quit);
-//    }
 }
