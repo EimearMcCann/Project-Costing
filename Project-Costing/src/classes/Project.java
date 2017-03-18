@@ -26,6 +26,14 @@ public class Project {
         cost = 0;
         duration = 0;
     }
+    
+    public Project(String name, String date){
+        projectID = nextProjectID++;
+        this.name = name;
+        startDate = Date.parseDate(date);
+        cost = 0;
+        duration = 0;
+    }
 
     /**
      * Constructor for project
