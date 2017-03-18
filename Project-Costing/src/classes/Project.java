@@ -113,6 +113,10 @@ public class Project {
     public void assignVersion(Version version) {
         versions.add(version);
     }
+    
+    public Version getLastVersion(){
+        return versions.get(versions.size() - 1);
+    }
 
     public void addVersion() {
         Version version = createVersion();
