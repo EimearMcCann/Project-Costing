@@ -30,6 +30,16 @@ public class Version {
         tasks = new ArrayList();
     }
     
+    public Version(String name, Date date){
+        number = nextNumber++;
+        this.name = name;
+        startDate = date;
+        duration = 0;
+        cost = 0;
+        endDate = null;
+        tasks = new ArrayList();
+    }
+    
     public Version(String name, Date start, double duration, ArrayList<Task> tasks){
         number = nextNumber++;
         this.name = name;
