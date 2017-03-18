@@ -2,6 +2,7 @@ package classes;
 
 import java.util.HashMap;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 import org.joda.time.DateTime;
 
 /**
@@ -17,9 +18,10 @@ public class Date {
     // Constructors
     public Date() {
         this.holidays = new HashMap();
-        this.date = new DateTime();
-        populateNumbers();
-        populateHolidays();
+        this.date = null;
+        year = 0;
+        month = 0;
+        day = 0;
     }
 
     public Date(int day, int month, int year) {
@@ -77,12 +79,12 @@ public class Date {
         boolean valid = false;
         do{
         try {
-            System.out.print("Please enter the year: ");
-            year = Integer.parseInt(in.nextLine());
-            System.out.print("Please enter the year: ");
-            month = Integer.parseInt(in.nextLine());
-            System.out.print("Please enter the year: ");
-            day = Integer.parseInt(in.nextLine());
+            year = Integer.parseInt(JOptionPane.showInputDialog(null, 
+                    "Enter the year", "Enter Year", JOptionPane.INFORMATION_MESSAGE));
+            month = Integer.parseInt(JOptionPane.showInputDialog(null, 
+                    "Enter the month", "Enter Month", JOptionPane.INFORMATION_MESSAGE));
+            day = Integer.parseInt(JOptionPane.showInputDialog(null, 
+                    "Enter the day", "Enter Day", JOptionPane.INFORMATION_MESSAGE));
             valid = true;
         } catch (NumberFormatException nfe) {
             System.out.print("Not a number " + nfe.getMessage());

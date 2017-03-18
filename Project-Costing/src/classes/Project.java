@@ -154,7 +154,7 @@ public class Project {
         Version v = null;
         do{
             try{
-               v = new Version(name);
+               v = new Version();
                v.read();
                System.out.print("Wanna Quit? [Y|N]");
                sentinel = in.nextLine().charAt(0);

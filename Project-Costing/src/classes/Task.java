@@ -1,13 +1,15 @@
 package classes;
 
+import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 /**
- * @author Marinus Toman
- * Date: 17-Mar-2017
+ * @author Marinus Toman Date: 17-Mar-2017
  */
 public class Task {
+
     // Instance Fields
     private final int taskID;
     private static int nextTaskID = 1;
@@ -20,7 +22,7 @@ public class Task {
     private double calculatedTime;
     private ArrayList<Resource> resourcesAssigned;
 
-    public Task(){
+    public Task() {
         taskID = nextTaskID++;
         name = null;
         type = null;
@@ -31,7 +33,7 @@ public class Task {
         calculatedTime = 0;
         resourcesAssigned = new ArrayList();
     }
-    
+
     public Task(Date start) {
         taskID = nextTaskID++;
         startDate = start;
@@ -90,14 +92,15 @@ public class Task {
     public void setDuration(double duration) {
         this.totalDuration = duration;
     }
-    
-    public Date getStartDate(){
+
+    public Date getStartDate() {
         return startDate;
     }
-    
-    public void setStartDate(Date start){
-        if(start != null)
+
+    public void setStartDate(Date start) {
+        if (start != null) {
             startDate = start;
+        }
     }
 
     public Date getEndDate() {
@@ -186,8 +189,8 @@ public class Task {
     private void calcTime() {
         calculatedTime = totalDuration / resourcesAssigned.size();
     }
-    
-    private void calcEndDate(){
+
+    private void calcEndDate() {
         calcTime();
         endDate = new Date(startDate.getDay(), startDate.getMonth(), startDate.getYear());
         for (int i = 1; i < calculatedTime; i++) {
@@ -199,7 +202,6 @@ public class Task {
      * toString method
      *
      */
-
     public void read() {
         Scanner in = new Scanner(System.in);
         boolean valid = false;
@@ -208,18 +210,18 @@ public class Task {
         String res;
         do {
             try {
-                System.out.println("\tENTER TASK");
-                System.out.print("ENTER NAME: ");
-                setName(in.nextLine());
-                System.out.print("ENTER TYPE: ");
-                setType(in.nextLine());
-                System.out.print("ENTER DURATION: ");
-                setDuration(Double.parseDouble(in.nextLine()));
-                System.out.println("ENTER START DATE: ");
+                setName(JOptionPane.showInputDialog(null,
+                        "Enter the name of the task", "Enter Name", JOptionPane.INFORMATION_MESSAGE));
+                setType(JOptionPane.showInputDialog(null,
+                        "Enter the task type", "Enter Type", JOptionPane.INFORMATION_MESSAGE));
+                setDuration(Double.parseDouble(JOptionPane.showInputDialog(null,
+                        "Enter the duration", "Enter Duration", JOptionPane.INFORMATION_MESSAGE)));
                 startDate.read();
                 do {
-                    System.out.print("ENTER RESOURCE: ");
-                    res = in.next();
+                    res = JOptionPane.showInputDialog(null,
+                            "Enter the resource", "Enter Resource",
+                            JOptionPane.INFORMATION_MESSAGE);
+
                     switch (res.toLowerCase()) {
                         case "plumber":
                             resource = Resource.PLUMBER;
@@ -255,27 +257,31 @@ public class Task {
                             resource = Resource.APPRENTICE;
                     }
                     resourcesAssigned.add(resource);
-                    System.out.print("Do you want to add another resource? [Y|N] ");
-                    sentinel = in.next().charAt(0);
+                    sentinel = JOptionPane.showInputDialog(null,
+                            "Do you want to add another resource [Y|N]", "Continue?",
+                            JOptionPane.QUESTION_MESSAGE).charAt(0);
                 } while (!(sentinel == 'N' || sentinel == 'n'));
                 valid = true;
             } catch (NumberFormatException nfe) {
                 System.out.println("Please enter an integer value!!! " + nfe.getMessage());
             } catch (IllegalArgumentException iae) {
                 System.out.println("Illegal, Please enter an integer value!!! " + iae.getMessage());
-            } catch (Exception e) {
+            } catch (HeadlessException e) {
                 System.out.println("Something else went wrong " + e.getMessage());
+            } catch (Exception e) {
+                System.out.println("Something bad went wrong " + e.getMessage());
             }
         } while (!valid);
     }
 
-    public static void setNextID(int id){
+    public static void setNextID(int id) {
         nextTaskID = id;
     }
-    
-    public int getResources(){
-        if(!resourcesAssigned.isEmpty())
+
+    public int getResources() {
+        if (!resourcesAssigned.isEmpty()) {
             return resourcesAssigned.size();
+        }
         return -1;
     }
 
@@ -283,11 +289,11 @@ public class Task {
     public String toString() {
         calcCost();
         calcEndDate();
-        return "Task{" + "taskID=" + taskID + ", startDate=" + startDate 
-                + ", endDate=" + endDate + ", name=" + name + ", type=" 
-                + type + ", cost=" + cost + ", totalDuration=" + totalDuration 
-                + ", calculatedTime=" + calculatedTime + ", resourcesAssigned=" 
+        return "Task{" + "taskID=" + taskID + ", startDate=" + startDate
+                + ", endDate=" + endDate + ", name=" + name + ", type="
+                + type + ", cost=" + cost + ", totalDuration=" + totalDuration
+                + ", calculatedTime=" + calculatedTime + ", resourcesAssigned="
                 + resourcesAssigned + '}';
     }
-    
+
 }
