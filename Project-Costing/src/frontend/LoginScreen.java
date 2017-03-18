@@ -59,6 +59,8 @@ public class LoginScreen extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("User Login");
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(275, 471));
+        setResizable(false);
 
         loginLbl.setBackground(new java.awt.Color(255, 255, 255));
         loginLbl.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -102,14 +104,10 @@ public class LoginScreen extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lockLbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(welcomeLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGap(18, 18, 18)
-                            .addComponent(loginBtn))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(loginBtn, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(loginLbl)
@@ -117,15 +115,19 @@ public class LoginScreen extends javax.swing.JFrame {
                             .addGap(18, 18, 18)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(loginField)
-                                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap())
+                                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(welcomeLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lockLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lockLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(welcomeLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(loginLbl)
                     .addComponent(loginField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -134,10 +136,8 @@ public class LoginScreen extends javax.swing.JFrame {
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(passwordLbl))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(loginBtn)
-                    .addComponent(welcomeLbl))
-                .addContainerGap())
+                .addComponent(loginBtn)
+                .addGap(34, 34, 34))
         );
 
         pack();
@@ -163,7 +163,19 @@ public class LoginScreen extends javax.swing.JFrame {
         userLogin = loginField.getText();
         userPassword = new String(passwordField.getPassword());
         
-        if(userLogin.equalsIgnoreCase(USERNAME) && userPassword.equalsIgnoreCase(PASSWORD)){
+        if(!userLogin.equalsIgnoreCase(USERNAME)){
+            welcomeLbl.setText("Wrong Username");
+            loginAttempts++;
+            if(loginAttempts == 3)
+                this.dispose();
+        }
+        else if(!userPassword.equalsIgnoreCase(PASSWORD)){
+            welcomeLbl.setText("Wrong Password");
+            loginAttempts++;
+            if(loginAttempts == 3)
+                this.dispose();
+        }
+        else{
             lockLbl.setIcon(new ImageIcon(getClass().getResource("/images/greenlock-icon.png")));
             loginBtn.setBackground(Color.green);
             welcomeLbl.setText("Welcome " + userLogin);
@@ -173,17 +185,9 @@ public class LoginScreen extends javax.swing.JFrame {
                     displayNextFrame();
                 }
             });
-            
             delay.setRepeats(false);
             delay.start();
-            
-        }
-        else{
-            welcomeLbl.setText("Try Again");
-            loginAttempts++;
-            if(loginAttempts == 3)
-                this.dispose();
-        }
+        }    
     }//GEN-LAST:event_loginBtnActionPerformed
 
     /**
