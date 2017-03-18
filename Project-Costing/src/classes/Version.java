@@ -1,6 +1,8 @@
 package classes;
 
+import java.awt.HeadlessException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  * @author Marinus Toman Date: 17-Mar-2017
@@ -18,9 +20,9 @@ public class Version {
     private ArrayList<Task> tasks;
 
     // Constructors
-    public Version(String name) {
+    public Version() {
         number = nextNumber++;
-        this.name = name;
+        this.name = null;
         startDate = new Date();
         duration = 0;
         cost = 0;
@@ -151,5 +153,22 @@ public class Version {
     private void calcEndDate() {
         // get end date of last task
         endDate = tasks.get(tasks.size() - 1).getEndDate();
+    }
+
+    public void read() {
+        try{
+            name = JOptionPane.showInputDialog(null, "Enter the customer name", 
+                    "Enter Name", JOptionPane.INFORMATION_MESSAGE);
+            startDate.read();
+            //cost = JOptionPane.showInputDialog(null, "Enter the customers phone number", "Enter Phone Number", JOptionPane.INFORMATION_MESSAGE);
+            duration = Double.parseDouble(JOptionPane.showInputDialog(null, 
+                    "Enter the duration", "Enter Duration", JOptionPane.INFORMATION_MESSAGE));
+        }catch(HeadlessException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }
 }
