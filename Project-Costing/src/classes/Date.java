@@ -94,7 +94,13 @@ public class Date {
         }while(!valid);
     }
     
-    public static Date parseDate(String dateString){
+    /**
+     * 
+     * @param dateString
+     * @return
+     * @throws IllegalArgumentException When parameter is null or empty
+     */
+    public static Date parseDate(String dateString) {
         Date temp = null;
         if (!(dateString == null || dateString.isEmpty())) {
             int length = dateString.length();
@@ -102,7 +108,7 @@ public class Date {
                 int year, month, day;
                 year = Integer.parseInt(dateString.substring(0, 4));
                 month = Integer.parseInt(dateString.substring(5, 7));
-                day = Integer.parseInt(dateString.substring(8));
+                day = Integer.parseInt(dateString.substring(8, 10));
                 temp = new Date(day, month, year);
             }
         }
@@ -111,7 +117,6 @@ public class Date {
     
     @Override
     public String toString() {
-        int year, month, day;
         year = date.year().get();
         month = date.monthOfYear().get();
         day = date.getDayOfMonth();
