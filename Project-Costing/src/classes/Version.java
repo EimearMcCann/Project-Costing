@@ -23,7 +23,7 @@ public class Version {
     public Version() {
         number = nextNumber++;
         this.name = null;
-        startDate = new Date();
+        startDate = null;
         duration = 0;
         cost = 0;
         endDate = null;
@@ -32,7 +32,7 @@ public class Version {
     
     public Version(String name, Date date){
         number = nextNumber++;
-        this.name = name;
+        this.name = name + " Ver." + number;
         startDate = date;
         duration = 0;
         cost = 0;
@@ -42,7 +42,7 @@ public class Version {
     
     public Version(String name, Date start, double duration, ArrayList<Task> tasks){
         number = nextNumber++;
-        this.name = name;
+        this.name = name + " Ver." + number;
         this.startDate = start;
         this.duration = duration;
         this.tasks = tasks;
@@ -52,7 +52,7 @@ public class Version {
     
     public Version(Version previous){
         number = nextNumber++;
-        this.name = previous.getName();
+        this.name = previous.getName() + " Ver." + number;
         this.startDate = previous.getStartDate();
         this.duration = previous.getDuration();
         this.tasks = previous.getTasks();
@@ -162,7 +162,8 @@ public class Version {
 
     private void calcEndDate() {
         // get end date of last task
-        endDate = tasks.get(tasks.size() - 1).getEndDate();
+        if(!tasks.isEmpty())
+            endDate = tasks.get(tasks.size() - 1).getEndDate();
     }
 
     public void read() {

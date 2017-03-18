@@ -24,7 +24,7 @@ public class Project {
     public Project() {
         projectID = nextProjectID++;
         name = "";
-        startDate = new Date();
+        startDate = null;
         cost = 0;
         duration = 0;
     }
