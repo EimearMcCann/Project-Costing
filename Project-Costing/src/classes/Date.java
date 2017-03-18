@@ -100,9 +100,9 @@ public class Date {
             int length = dateString.length();
             if (length == 10) {
                 int year, month, day;
-                year = Integer.parseInt(dateString.substring(0, 5));
-                month = Integer.parseInt(dateString.substring(6, 8));
-                day = Integer.parseInt(dateString.substring(9));
+                year = Integer.parseInt(dateString.substring(0, 4));
+                month = Integer.parseInt(dateString.substring(5, 7));
+                day = Integer.parseInt(dateString.substring(8));
                 temp = new Date(day, month, year);
             }
         }
