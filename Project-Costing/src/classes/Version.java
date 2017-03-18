@@ -112,6 +112,13 @@ public class Version {
     public ArrayList<Task> getTasks() {
         return tasks;
     }
+    
+    public Task getLastTask(){
+        Task temp = null;
+        if(!tasks.isEmpty())
+            temp = tasks.get(tasks.size()-1);
+        return temp;
+    }
 
     public Task getTask(int id) {
         Task temp = null;
