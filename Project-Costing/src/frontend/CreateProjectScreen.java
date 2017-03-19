@@ -92,7 +92,7 @@ public class CreateProjectScreen extends javax.swing.JFrame {
         });
 
         projectStartChooser.setToolTipText("Select Start Date");
-        projectStartChooser.setDateFormatString("YYYY-MM-dd");
+        projectStartChooser.setDateFormatString("yyyy-MM-dd");
         projectStartChooser.setPreferredSize(new java.awt.Dimension(166, 24));
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -190,9 +190,9 @@ public class CreateProjectScreen extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(backBtn)
-                    .addComponent(createProjectBtn))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(createProjectBtn)
+                    .addComponent(backBtn))
                 .addContainerGap())
         );
 
@@ -210,6 +210,7 @@ public class CreateProjectScreen extends javax.swing.JFrame {
         try {
             java.sql.Date sqlDate = new java.sql.Date(projectStartChooser.getDate().getTime());
             String startDate = sqlDate.toString();
+            System.out.println(startDate);
             project.setStartDate(startDate);
             this.setVisible(false);
             CreateVersionScreen screen = new CreateVersionScreen(project, project.getLastVersion(), this);
@@ -227,6 +228,7 @@ public class CreateProjectScreen extends javax.swing.JFrame {
             long time = projectStartChooser.getDate().getTime();
             java.sql.Date sqlDate = new java.sql.Date(time);
             String startDate = sqlDate.toString();
+            //System.out.println(startDate);
             project = new Project(name, startDate);
             this.setVisible(false);
             CreateVersionScreen screen = new CreateVersionScreen(project, this);

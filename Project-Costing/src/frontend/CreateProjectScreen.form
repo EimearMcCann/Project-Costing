@@ -111,9 +111,9 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="backBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="createProjectBtn" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="backBtn" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -166,7 +166,7 @@
     <Component class="com.toedter.calendar.JDateChooser" name="projectStartChooser">
       <Properties>
         <Property name="toolTipText" type="java.lang.String" value="Select Start Date"/>
-        <Property name="dateFormatString" type="java.lang.String" value="YYYY-MM-dd"/>
+        <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
         <Property name="icon" type="javax.swing.ImageIcon" editor="org.netbeans.modules.form.ComponentChooserEditor">
           <ComponentRef name="default"/>
         </Property>
