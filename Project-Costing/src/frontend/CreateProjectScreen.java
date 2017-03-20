@@ -6,8 +6,6 @@
 package frontend;
 
 import classes.Project;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 /**
  *
@@ -228,7 +226,6 @@ public class CreateProjectScreen extends javax.swing.JFrame {
             long time = projectStartChooser.getDate().getTime();
             java.sql.Date sqlDate = new java.sql.Date(time);
             String startDate = sqlDate.toString();
-            //System.out.println(startDate);
             project = new Project(name, startDate);
             this.setVisible(false);
             CreateVersionScreen screen = new CreateVersionScreen(project, this);
