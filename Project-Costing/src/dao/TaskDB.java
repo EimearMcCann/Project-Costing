@@ -49,14 +49,14 @@ public class TaskDB extends DBHandler{
         return t;
     }
 
-    public void write(Task task, Version version) {
+    public void write(Task task, int versionID) {
         openConnection();
         //createTaskTable();
-        if (task != null && version != null) {
+        if (task != null && versionID > 0) {
             try {
                 String startDate = task.getStartDate().toString();
                 String endDate = task.getEndDate().toString();
-                String query = makeInsertQuery(task.getName(), task.getTYPE(), startDate, endDate, version.getNumber(), task.getCalculatedTime());
+                String query = makeInsertQuery(task.getName(), task.getTYPE(), startDate, endDate, versionID, task.getCalculatedTime());
                 stmt.executeQuery("USE project_costing;");
                 //stmt.executeUpdate(query);
                 System.out.println("success...written to db");
