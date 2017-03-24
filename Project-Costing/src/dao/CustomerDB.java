@@ -8,9 +8,6 @@ import java.sql.SQLException;
  * @author Marinus Toman Date: 17-Mar-2017
  */
 public class CustomerDB extends DBHandler {
-    // Instance Fields
-
-    // Constructors
     /**
      * Constructs a new connection to the database
      * @param username
@@ -20,7 +17,6 @@ public class CustomerDB extends DBHandler {
         super(username, pass);
     }
 
-    // Methods
     /**
      * Reads a record from the database table based on the given primary key
      * @param id
