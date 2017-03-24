@@ -15,12 +15,31 @@ public class ProjectDB extends DBHandler {
     }
 
     // Methods
-    public void write(Project version, int customerID) {
-        
+    public void write(Project project, int customerID) {
+        openConnection();
+        //createTaskTable();
+        if (project != null && customerID > 0) {
+            try {
+                String startDate = project.getStartDate().toString();
+                String endDate = project.getEndDate().toString();
+                String query = makeInsertQuery(project.getName(), startDate, endDate, project.getCost(), customerID);
+                stmt.executeQuery("USE project_costing;");
+                stmt.executeUpdate(query);
+                System.out.println("success...written to db");
+            } catch (NullPointerException npe) {
+                System.out.println(npe.getMessage());
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            } finally{
+                closeConnection();
+            }
+        }
     }
     
     private static String makeInsertQuery(String name, String start, String end, double cost, int customerID) {
-        String insert = "INSERT INTO task (Name, Type, Start, End, Cost, ProjectID, Resources) "
+        String insert = "INSERT INTO project (Name, Type, Start, End, Cost, CustomerID) "
                 + "VALUES ('" + name + "', '" + start + "', '"
                 + end + "', "  + cost + ", " + customerID + " );";
 
