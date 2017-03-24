@@ -20,7 +20,7 @@ public class CustomerDB extends DBHandler {
         Customer c = null;
         // if id exists in table,
         // then create query and create customer
-        if (id > 0) {
+        if (id > 0 && id < getLastID()) {
             try {
                 // openconnection
                 openConnection();
@@ -139,14 +139,14 @@ public class CustomerDB extends DBHandler {
         }
     }
 
-    private int getCount() {
-        int rows = 0;
-        String query = "SELECT COUNT(ID) FROM customer;";
+    private int getLastID() {
+        int id = 0;
+        String query = "SELECT ID FROM customer ORDER BY ID DESC LIMIT 1;";
         try {
             openConnection();
             ResultSet rs = stmt.executeQuery(query);
             rs.next();
-            rows = rs.getInt(1);
+            id = rs.getInt(1);
         } catch (SQLException e) {
             System.out.println("Something wrong with count method. " + e.getMessage());
         } catch (Exception e) {
@@ -154,6 +154,6 @@ public class CustomerDB extends DBHandler {
         } finally {
             closeConnection();
         }
-        return rows;
+        return id;
     }
 }
