@@ -24,7 +24,7 @@ public class CustomerDB extends DBHandler {
             try {
                 // openconnection
                 openConnection();
-                // create query
+                // create query to read customer info
                 String query = makeSelectCustomer(id);
                 // get results and pass cursor over first row
                 ResultSet rs = stmt.executeQuery(query);
@@ -54,32 +54,8 @@ public class CustomerDB extends DBHandler {
                 // create table if it doesnt exist
                 createCustomerTable();
                 // create query to insert customer info
-                String query = makeInsertQuery(c.getName(), 
-                        c.getAddress().getStreet(), c.getAddress().getTown(), 
-                        c.getAddress().getCounty(), c.getPhone(), c.getEmail());
-                // execute query
-                stmt.executeUpdate(query);
-                System.out.println("success...written to db");
-            } catch (NullPointerException npe) {
-                System.out.println(npe.getMessage());
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            } finally {
-                closeConnection();
-            }
-        }
-    }
-    
-    public void update(Customer c, int id){
-        if (c != null && id > 0) {
-            try {
-                // open connection to db
-                openConnection();
-                // create query to insert customer info
-                String query = makeUpdateQuery(id, c.getName(), 
-                        c.getAddress().getStreet(), c.getAddress().getTown(), 
+                String query = makeInsertQuery(c.getName(),
+                        c.getAddress().getStreet(), c.getAddress().getTown(),
                         c.getAddress().getCounty(), c.getPhone(), c.getEmail());
                 // execute query
                 stmt.executeUpdate(query);
@@ -96,32 +72,98 @@ public class CustomerDB extends DBHandler {
         }
     }
 
-    private static String makeSelectCustomer(int id) {
+    public void update(Customer c, int id) {
+        if (c != null && (id > 0 && id < getLastID())) {
+            try {
+                // open connection to db
+                openConnection();
+                // create query to update customer info
+                String query = makeUpdateQuery(id, c.getName(),
+                        c.getAddress().getStreet(), c.getAddress().getTown(),
+                        c.getAddress().getCounty(), c.getPhone(), c.getEmail());
+                // execute query
+                stmt.executeUpdate(query);
+                System.out.println("success...updated record");
+            } catch (NullPointerException npe) {
+                System.out.println(npe.getMessage());
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            } finally {
+                // close connection to db
+                closeConnection();
+            }
+        }
+    }
+
+    public void delete(int id) {
+        if (id > 0 && id < getLastID()) {
+            try {
+                // open connection to db
+                openConnection();
+                // create query to delete customer info
+                String query = makeDeleteQuery(id);
+                // execute query
+                stmt.executeUpdate(query);
+                System.out.println("success...deleted ID: " + id + " from db");
+            } catch (NullPointerException npe) {
+                System.out.println(npe.getMessage());
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            } finally {
+                // close connection to db
+                closeConnection();
+            }
+        }
+    }
+
+    private String makeSelectCustomer(int id) {
         String select = "SELECT Name, Street, Town, County, PhoneNo, Email "
                 + "FROM project_costing.customer WHERE ID = " + id + ";";
 
         return select;
     }
 
-    private static String makeUpdateQuery(int id, String name, String street, String town, String county, String phone, String email) {
-        String insert = "UPDATE project_costing.customer "
-                + " SET Name = '" + name + "', Street = '" + street 
-                + "', Town = '" + town + "', County = '" + county 
+    private String makeUpdateQuery(int id, String name, String street,
+            String town, String county, String phone, String email) {
+        // create update query
+        String update = "UPDATE project_costing.customer "
+                + " SET Name = '" + name + "', Street = '" + street
+                + "', Town = '" + town + "', County = '" + county
                 + "', PhoneNo = '" + phone + "', Email = '" + email + "'"
                 + " WHERE ID = " + id + ";";
 
-        return insert;
+        return update;
     }
-    
-    private static String makeInsertQuery(String name, String street, String town, String county, String phone, String email){
-        String insert = "INSERT INTO project_costing.customer (Name, Street, Town, County, PhoneNo, Email) "
-                + "VALUES ('" + name + "', '" + street + "', '" + town + "', '" + county + "', '" + phone + "', '" + email + "');";
+
+    private String makeInsertQuery(String name, String street,
+            String town, String county, String phone, String email) {
+        // create insert query
+        String insert = "INSERT INTO project_costing.customer "
+                + "(Name, Street, Town, County, PhoneNo, Email) "
+                + "VALUES ('" + name + "', '" + street + "', '" + town + "', '" 
+                + county + "', '" + phone + "', '" + email + "');";
 
         return insert;
+    }
+
+    private String makeDeleteQuery(int id) {
+        String del = null;
+        if (id > 0 && id <= getLastID()) 
+        {
+            // create delete query
+            del = "DELETE FROM project_costing.customer WHERE ID = "
+                    + id + ";";
+        }
+
+        return del;
     }
 
     private void createCustomerTable() {
-        //create table
+        //create table query
         String createTable = "CREATE TABLE IF NOT EXISTS customer "
                 + "(CustomerID INTEGER auto_increment not NULL, "
                 + " Name VARCHAR(255), "
