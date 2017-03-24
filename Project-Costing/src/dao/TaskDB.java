@@ -58,7 +58,7 @@ public class TaskDB extends DBHandler{
                 String endDate = task.getEndDate().toString();
                 String query = makeInsertQuery(task.getName(), task.getTYPE(), startDate, endDate, versionID, task.getCalculatedTime());
                 stmt.executeQuery("USE project_costing;");
-                //stmt.executeUpdate(query);
+                stmt.executeUpdate(query);
                 System.out.println("success...written to db");
             } catch (NullPointerException npe) {
                 System.out.println(npe.getMessage());
