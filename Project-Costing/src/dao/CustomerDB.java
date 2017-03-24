@@ -11,11 +11,21 @@ public class CustomerDB extends DBHandler {
     // Instance Fields
 
     // Constructors
-    public CustomerDB(String user, String pass) {
-        super(user, pass);
+    /**
+     * Constructs a new connection to the database
+     * @param username
+     * @param pass 
+     */
+    public CustomerDB(String username, String pass) {
+        super(username, pass);
     }
 
     // Methods
+    /**
+     * Reads a record from the database table based on the given primary key
+     * @param id
+     * @return Full record(object) from the table
+     */
     public Customer read(int id) {
         Customer c = null;
         // if id exists in table,
@@ -46,6 +56,10 @@ public class CustomerDB extends DBHandler {
         return c;
     }
 
+    /**
+     * Writes a record to the database table
+     * @param c 
+     */
     public void write(Customer c) {
         if (c != null) {
             try {
@@ -72,6 +86,11 @@ public class CustomerDB extends DBHandler {
         }
     }
 
+    /**
+     * Updates an existing record in the table with the new information provided
+     * @param c
+     * @param id 
+     */
     public void update(Customer c, int id) {
         if (c != null && (id > 0 && id < getLastID())) {
             try {
@@ -97,6 +116,10 @@ public class CustomerDB extends DBHandler {
         }
     }
 
+    /**
+     * Deletes a record from the table if it exists in the table
+     * @param id 
+     */
     public void delete(int id) {
         if (id > 0 && id < getLastID()) {
             try {
@@ -120,6 +143,11 @@ public class CustomerDB extends DBHandler {
         }
     }
 
+    /**
+     * Creates a query to select a record from the table
+     * @param id
+     * @return String query
+     */
     private String makeSelectCustomer(int id) {
         String select = "SELECT Name, Street, Town, County, PhoneNo, Email "
                 + "FROM project_costing.customer WHERE ID = " + id + ";";
@@ -127,6 +155,17 @@ public class CustomerDB extends DBHandler {
         return select;
     }
 
+    /**
+     * Creates a query to update a record in the table
+     * @param id
+     * @param name
+     * @param street
+     * @param town
+     * @param county
+     * @param phone
+     * @param email
+     * @return String query
+     */
     private String makeUpdateQuery(int id, String name, String street,
             String town, String county, String phone, String email) {
         // create update query
@@ -139,6 +178,16 @@ public class CustomerDB extends DBHandler {
         return update;
     }
 
+    /**
+     * Creates a query to insert a record into the table
+     * @param name
+     * @param street
+     * @param town
+     * @param county
+     * @param phone
+     * @param email
+     * @return String query
+     */
     private String makeInsertQuery(String name, String street,
             String town, String county, String phone, String email) {
         // create insert query
@@ -150,29 +199,34 @@ public class CustomerDB extends DBHandler {
         return insert;
     }
 
+    /**
+     * Creates a query to delete a record based on the given primary key
+     * @param id
+     * @return String query
+     */
     private String makeDeleteQuery(int id) {
-        String del = null;
-        if (id > 0 && id <= getLastID()) 
-        {
-            // create delete query
-            del = "DELETE FROM project_costing.customer WHERE ID = "
-                    + id + ";";
-        }
+        // create delete query
+        String del = "DELETE FROM project_costing.customer "
+                + "WHERE ID = " + id + ";";
 
         return del;
     }
 
+    /**
+     * Creates Customer database table
+     *    if it does not exist
+     */
     private void createCustomerTable() {
         //create table query
         String createTable = "CREATE TABLE IF NOT EXISTS customer "
-                + "(CustomerID INTEGER auto_increment not NULL, "
+                + "(ID INTEGER auto_increment not NULL, "
                 + " Name VARCHAR(255), "
                 + " Street VARCHAR(255), "
                 + " Town VARCHAR(255), "
                 + " County VARCHAR(255), "
                 + " PhoneNo VARCHAR(255),"
                 + " Email VARCHAR(255),"
-                + " PRIMARY KEY ( CustomerID ));";
+                + " PRIMARY KEY ( ID ));";
         //create customer table
         try {
             stmt.executeUpdate(createTable);
@@ -181,6 +235,10 @@ public class CustomerDB extends DBHandler {
         }
     }
 
+    /**
+     * Gets the last primary key used
+     * @return Last primary key in the table
+     */
     private int getLastID() {
         int id = 0;
         String query = "SELECT ID FROM customer ORDER BY ID DESC LIMIT 1;";
