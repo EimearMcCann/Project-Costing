@@ -20,7 +20,7 @@ public class CustomerDB extends DBHandler {
         Customer c = null;
         // if id exists in table,
         // then create query and create customer
-        if (id <= getCount()) {
+        if (id <= getCount() && id > 0) {
             try {
                 // openconnection
                 openConnection();
@@ -71,6 +71,30 @@ public class CustomerDB extends DBHandler {
             }
         }
     }
+    
+    public void update(Customer c, int id){
+        if (c != null && id > 0) {
+            try {
+                // open connection to db
+                openConnection();
+                // create query to insert customer info
+                String query = makeUpdateQuery(id, c.getName(), 
+                        c.getAddress().getStreet(), c.getAddress().getTown(), 
+                        c.getAddress().getCounty(), c.getPhone(), c.getEmail());
+                // execute query
+                stmt.executeUpdate(query);
+                System.out.println("success...written to db");
+            } catch (NullPointerException npe) {
+                System.out.println(npe.getMessage());
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            } finally {
+                closeConnection();
+            }
+        }
+    }
 
     private static String makeSelectCustomer(int id) {
         String select = "SELECT Name, Street, Town, County, PhoneNo, Email "
@@ -79,7 +103,17 @@ public class CustomerDB extends DBHandler {
         return select;
     }
 
-    private static String makeInsertQuery(String name, String street, String town, String county, String phone, String email) {
+    private static String makeUpdateQuery(int id, String name, String street, String town, String county, String phone, String email) {
+        String insert = "UPDATE project_costing.customer "
+                + " SET Name = '" + name + "', Street = '" + street 
+                + "', Town = '" + town + "', County = '" + county 
+                + "', PhoneNo = '" + phone + "', Email = '" + email + "'"
+                + " WHERE ID = " + id + ";";
+
+        return insert;
+    }
+    
+    private static String makeInsertQuery(String name, String street, String town, String county, String phone, String email){
         String insert = "INSERT INTO project_costing.customer (Name, Street, Town, County, PhoneNo, Email) "
                 + "VALUES ('" + name + "', '" + street + "', '" + town + "', '" + county + "', '" + phone + "', '" + email + "');";
 
