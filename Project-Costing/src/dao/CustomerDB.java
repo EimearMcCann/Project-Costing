@@ -26,7 +26,7 @@ public class CustomerDB extends DBHandler {
         Customer c = null;
         // if id exists in table,
         // then create query and create customer
-        if (id > 0 && id < getLastID()) {
+        if (id > 0 && id <= getLastID()) {
             try {
                 // openconnection
                 openConnection();
@@ -88,7 +88,7 @@ public class CustomerDB extends DBHandler {
      * @param id 
      */
     public void update(Customer c, int id) {
-        if (c != null && (id > 0 && id < getLastID())) {
+        if (c != null && (id > 0 && id <= getLastID())) {
             try {
                 // open connection to db
                 openConnection();
@@ -117,7 +117,7 @@ public class CustomerDB extends DBHandler {
      * @param id 
      */
     public void delete(int id) {
-        if (id > 0 && id < getLastID()) {
+        if (id > 0 && id <= getLastID()) {
             try {
                 // open connection to db
                 openConnection();
