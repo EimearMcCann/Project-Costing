@@ -20,7 +20,7 @@ public class CustomerDB extends DBHandler {
         Customer c = null;
         // if id exists in table,
         // then create query and create customer
-        if (id <= getCount() && id > 0) {
+        if (id > 0) {
             try {
                 // openconnection
                 openConnection();
