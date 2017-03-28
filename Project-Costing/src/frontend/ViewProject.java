@@ -18,6 +18,10 @@ public class ViewProject extends javax.swing.JFrame {
         initComponents();
     }
 
+    ViewProject(MainMenu aThis) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,10 +52,17 @@ public class ViewProject extends javax.swing.JFrame {
         jList1 = new javax.swing.JList<>();
         ProjectSearchLbl = new javax.swing.JLabel();
         ProjectSearchtxtField = new javax.swing.JTextField();
+        BackToMenuBtn = new javax.swing.JButton();
+        EditProjBtn = new javax.swing.JButton();
+        ExitBtn = new javax.swing.JButton();
+        ImageLbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 5));
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         ProjectNameLbl.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         ProjectNameLbl.setText("Project Name");
@@ -130,7 +141,7 @@ public class ViewProject extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        ProjectDetailsTabPane.addTab("", jPanel2);
+        ProjectDetailsTabPane.addTab("Details", jPanel2);
 
         TasksTabPane.addTab("Project_Details", ProjectDetailsTabPane);
 
@@ -148,10 +159,32 @@ public class ViewProject extends javax.swing.JFrame {
         ProjectSearchLbl.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         ProjectSearchLbl.setText("Search For Project- Enter ID");
 
+        BackToMenuBtn.setBackground(new java.awt.Color(255, 255, 255));
+        BackToMenuBtn.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        BackToMenuBtn.setText("Back to Menu");
+
+        EditProjBtn.setBackground(new java.awt.Color(255, 255, 255));
+        EditProjBtn.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        EditProjBtn.setText("Edit Project");
+
+        ExitBtn.setBackground(new java.awt.Color(255, 255, 255));
+        ExitBtn.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        ExitBtn.setText("Exit");
+
+        ImageLbl.setIcon(new javax.swing.ImageIcon("G:\\logo_sml.png"));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(BackToMenuBtn)
+                .addGap(95, 95, 95)
+                .addComponent(EditProjBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ExitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -161,19 +194,29 @@ public class ViewProject extends javax.swing.JFrame {
                         .addGap(26, 26, 26)
                         .addComponent(ProjectSearchLbl)
                         .addGap(32, 32, 32)
-                        .addComponent(ProjectSearchtxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(76, Short.MAX_VALUE))
+                        .addComponent(ProjectSearchtxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(ImageLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(278, Short.MAX_VALUE)
+                .addGap(39, 39, 39)
+                .addComponent(ImageLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ProjectSearchLbl)
                     .addComponent(ProjectSearchtxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(TasksTabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ExitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                    .addComponent(EditProjBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BackToMenuBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -232,11 +275,15 @@ public class ViewProject extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BackToMenuBtn;
     private javax.swing.JLabel CostLbl;
     private javax.swing.JTextField CostTextField;
     private javax.swing.JLabel DurationLbl;
+    private javax.swing.JButton EditProjBtn;
     private javax.swing.JLabel EndDateLbl;
     private javax.swing.JTextField EndDateTxtField;
+    private javax.swing.JButton ExitBtn;
+    private javax.swing.JLabel ImageLbl;
     private javax.swing.JTabbedPane ProjectDetailsTabPane;
     private javax.swing.JLabel ProjectIDLbl;
     private javax.swing.JTextField ProjectIDTxtField;
