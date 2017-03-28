@@ -50,7 +50,6 @@ public class MainMenu extends javax.swing.JFrame {
         viewProjectBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         viewProjectBtn.setText("View Projects");
         viewProjectBtn.setToolTipText("View All Projects");
-        viewProjectBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 0)));
         viewProjectBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 viewProjectBtnActionPerformed(evt);
@@ -61,7 +60,6 @@ public class MainMenu extends javax.swing.JFrame {
         createProjectBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         createProjectBtn.setText("Create Project");
         createProjectBtn.setToolTipText("Create a new Project");
-        createProjectBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 0)));
         createProjectBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createProjectBtnActionPerformed(evt);
@@ -71,7 +69,6 @@ public class MainMenu extends javax.swing.JFrame {
         createReportBtn.setBackground(new java.awt.Color(255, 255, 255));
         createReportBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         createReportBtn.setText("Create Report");
-        createReportBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 0)));
         createReportBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createReportBtnActionPerformed(evt);
@@ -81,7 +78,6 @@ public class MainMenu extends javax.swing.JFrame {
         createCustomerBtn.setBackground(new java.awt.Color(255, 255, 255));
         createCustomerBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         createCustomerBtn.setText("Create Customer");
-        createCustomerBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 0)));
         createCustomerBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createCustomerBtnActionPerformed(evt);
@@ -91,7 +87,6 @@ public class MainMenu extends javax.swing.JFrame {
         reportBtn.setBackground(new java.awt.Color(255, 255, 255));
         reportBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         reportBtn.setText("View Reports");
-        reportBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 0)));
         reportBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 reportBtnActionPerformed(evt);
@@ -101,7 +96,6 @@ public class MainMenu extends javax.swing.JFrame {
         viewCustomerBtn.setBackground(new java.awt.Color(255, 255, 255));
         viewCustomerBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         viewCustomerBtn.setText("View Customers");
-        viewCustomerBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 0)));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -121,10 +115,10 @@ public class MainMenu extends javax.swing.JFrame {
                             .addComponent(reportBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(67, 67, 67)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(createCustomerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                            .addComponent(createCustomerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(viewCustomerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,6 +175,10 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void viewProjectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewProjectBtnActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
+        ViewProject screen = new ViewProject(this);
+        screen.setVisible(true);
+        
     }//GEN-LAST:event_viewProjectBtnActionPerformed
 
     /**
