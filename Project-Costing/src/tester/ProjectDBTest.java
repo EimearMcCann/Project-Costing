@@ -13,15 +13,15 @@ public class ProjectDBTest {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Project t1 = new Project();
+        Project p1 = new Project();
         
-        Project t2 = new Project();
+        Project p2 = new Project();
 
         ProjectDB db = new ProjectDB("remoteuser", "password");
 
-        db.write(t1, 1);
-        db.write(t2, 1);
-        System.out.println("Success, Written to DB");
+        db.write(p1, 2);
+        db.write(p2, 2);
+        System.out.println("Success, Written Projects to DB");
     }
 
 }
